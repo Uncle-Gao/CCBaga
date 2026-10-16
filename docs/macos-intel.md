@@ -6,7 +6,7 @@
 -->
 # macOS Intel port
 
-**Status: the native Intel engine, debug and optimized host bundles have been built. Six real engine probes, the actual ZIP importer, 45 existing UI/profile checks, two headed launcher/native-quit cycles and two optimized-host companion reconnections passed. A complete ad-hoc signed Intel development DMG has passed payload/layout checks; the unchanged formal verifier rejects its missing Gatekeeper approval. Owner visual approval, fresh installation/full identity acceptance, formal signing/notarization and public-release acceptance remain pending. No accepted public Intel installer is available yet.**
+**Status: the port is aligned with owner main/release base `30a171f`. The accepted Intel engine is unchanged. The current optimized host build, 22 frontend tests, 53 UI/profile checks, 96 native Rust tests and isolated Security checks passed, as did two real optimized-host companion reconnect/normal-quit cycles. The current complete ad-hoc signed development DMG passed payload/layout checks; the unchanged formal verifier rejects its missing Gatekeeper approval. Owner visual approval, fresh installation/full identity acceptance, formal signing/notarization and public-release acceptance remain pending. No accepted public Intel installer is available yet.**
 
 The port shares the complete React UI, catalogs, styling, Rust/native operations, browser arguments, bundle identifiers and identity storage with arm64. No browser function is removed. It preserves the installed Xcode version and uses `DEVELOPER_DIR` only within build commands.
 
@@ -81,9 +81,9 @@ Both macOS release jobs use the same signing, notarization, UI/profile and insta
 
 Each architecture emits its own `CCBaga-<version>-macos-<arch>.dmg`, signed `.app.tar.gz`, `latest-macos-<arch>.json`, `macOS-<arch>-SHA256SUMS` and internal notarization record. The assembly step requires both complete macOS inputs before creating public `latest.json` with `darwin-aarch64`, `darwin-x86_64` and `windows-x86_64`. It checks that each target references its own archive/signature. Public delivery contains seven installers, two macOS updates, the merged manifest and checksums; both applications retain their existing names and data identifiers.
 
-## Verified so far
+## Earlier application acceptance checkpoint
 
-The first application acceptance checkpoint below used project base `e5df9fa18cd78bc105e4176fc9ee514b25cb437b`. Its engine inputs and digest are fixed separately above. Source alignment and any newer application checkpoint must be recorded before owner release.
+The first application acceptance checkpoint below used project base `e5df9fa18cd78bc105e4176fc9ee514b25cb437b`. Its engine inputs and digest are fixed separately above. The current owner-aligned application checkpoint is recorded separately below.
 
 On the existing Intel machine using Xcode 16.2 / SDK 15.2, with global `xcode-select` unchanged:
 
@@ -107,11 +107,25 @@ On the existing Intel machine using Xcode 16.2 / SDK 15.2, with global `xcode-se
 
 The native Foundation test showed that `NSHomeDirectory`, tilde expansion and Application Support/Cache lookups ignore a child-process `HOME` override on this machine. A subsequent real Foundation probe confirmed that adding `CFFIXED_USER_HOME` points those lookups at the temporary home. The headed diagnostic used both variables, explicit browser profiles and mock Keychain access; the four real host data/cache/preference paths checked before and after remained absent. Rust/Tauri's `dirs` path lookup also uses the temporary `HOME`. Native GUI acceptance still needs to verify each data boundary; these observations do not establish isolation of every macOS API or LaunchServices child environment. Account-changing Keychain operations remain covered by the existing disposable native fixture rather than a real account switch.
 
+## Current owner handoff checkpoint
+
+The port was rebased onto owner main/release commit `30a171f5191fbb65dc24e4b1a0392d998f7c5719`. Application code was built from port commit `7dc03f6fe249b8d9f78a4a3bfee4be2fac4954d5`; subsequent handoff documentation does not change the compiled product. All five accepted engine patch digests and engine version 148 remained identical, so the accepted native engine was reused.
+
+- The diff against that owner base is empty for UI, assets, vendored components and native Objective-C operations. Production Rust logic is also unchanged; the Rust delta contains the updater tests and module map only. This retains the owner's newer complete-profile-reset and data-retention behavior on both macOS architectures.
+- The optimized x86_64 host rebuilt successfully in 4 minutes 11 seconds with existing Xcode 16.2 / SDK 15.2. Its actual Mach-O minimum remains macOS 12. The global Xcode selection remains CommandLineTools.
+- Frontend tests: **22 passed**, **4,125 assertions**. The real Intel browser completed **53** existing UI/profile checks, including the owner's newer browser cleanup confirmation cases; that suite still uses mock IPC.
+- Native Rust tests: **96 passed**, **2 ignored** (the existing manual performance measurement and actual published signed-archive gate). The isolated real Security fixture passed scope, shared-field, stale refusal, exact deletion, restore and unrelated-item preservation checks.
+- Two real optimized-host start/reconnect/normal-quit cycles passed against a staged, sandboxed browser and the actual bundled detection page. The real Rust context/report endpoints, virtual identity card, CPU/language/timezone/platform/version observations, denied geolocation, report receive times and session cleanup passed again. Browser external routes were blocked and remained visibly unverified; the real application-data paths checked before/after remained absent.
+- Engine boundary tests **21**, macOS packaging fixtures **8**, native macOS importer fixtures **4**, development installer fixtures **8** and release assembly fixtures **3** passed, along with signing order/JIT, temporary-versus-official signature, credential exclusion and ticket retry checks. Their synthetic installation/Gatekeeper messages do not replace the actual DMG result below.
+- The current development DMG is `CCBaga-0.2.0-macos-x86_64-development.dmg`, SHA-256 `56e9e19d592be329e42360297344258cc4c7cda115f2bbb9bec5d50a28ce845d`. Its read-only payload/layout, identities, all 14 x86_64 Mach-O files, built-binary hashes, embedded engine ZIP/UI and deep/strict ad-hoc signatures passed. Both real Gatekeeper checks returned **exit 3**, and the unchanged formal DMG verifier returned **exit 1**. This current candidate supersedes the earlier `654bf4b6...` development image for owner review.
+
+The local development version `0.2.0` is the repository's unchanged package version; the owner's release workflow supplies the formal release version. The user selected handoff to the owner for formal signing/publication. No local installation, public upload, owner message or upstream PR was performed. The handoff contains source changes, accepted engine and provenance, development candidate and evidence, plus a Chinese PR title/body draft.
+
 ## Gates still required for full CCBaga support
 
-1. Align the port with the owner's current main/release source and rerun the affected application checks. The local engine can be reused while its pinned version and source patches remain identical.
-2. Obtain owner visual approval and complete fresh installation, full native identity/browser switching and signed update acceptance on target hardware.
-3. Complete Developer ID signing, notarization/Gatekeeper and full double-app installer acceptance before advertising an Intel release.
+1. Obtain owner visual approval and complete fresh installation and full native identity/browser switching on target hardware.
+2. Complete Developer ID signing, notarization/Gatekeeper and real signed-update acceptance.
+3. Complete both macOS CI architectures and the existing full multi-platform delivery gates before advertising an Intel release.
 
 The README support list retains its existing acceptance level until these gates pass. The new release matrix is configured, but has not produced a real Intel release.
 
