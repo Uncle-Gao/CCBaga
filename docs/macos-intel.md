@@ -1,5 +1,5 @@
 <!--
-[INPUT]: 2026-10-16 的固定引擎、SDK 15.2 原生构建、真实有窗口/宿主回环观测与双应用候选安装盘。
+[INPUT]: 2026-10-16 的固定引擎、SDK 15.2 原生构建、真实有窗口/宿主回环观测、候选安装盘与所有者审核交接。
 [OUTPUT]: Intel 完整支持的首个依赖、固定源码构建步骤、候选验收与尚未通过的产品交付门槛。
 [POS]: Intel 引擎开发说明；不宣称存在可安装的 Intel 版 CCBaga。
 [PROTOCOL]: 变更时更新此头部，然后检查 CLAUDE.md
@@ -119,7 +119,7 @@ The port was rebased onto owner main/release commit `30a171f5191fbb65dc24e4b1a03
 - Engine boundary tests **21**, macOS packaging fixtures **8**, native macOS importer fixtures **4**, development installer fixtures **8** and release assembly fixtures **3** passed, along with signing order/JIT, temporary-versus-official signature, credential exclusion and ticket retry checks. Their synthetic installation/Gatekeeper messages do not replace the actual DMG result below.
 - The current development DMG is `CCBaga-0.2.0-macos-x86_64-development.dmg`, SHA-256 `56e9e19d592be329e42360297344258cc4c7cda115f2bbb9bec5d50a28ce845d`. Its read-only payload/layout, identities, all 14 x86_64 Mach-O files, built-binary hashes, embedded engine ZIP/UI and deep/strict ad-hoc signatures passed. Both real Gatekeeper checks returned **exit 3**, and the unchanged formal DMG verifier returned **exit 1**. This current candidate supersedes the earlier `654bf4b6...` development image for owner review.
 
-The local development version `0.2.0` is the repository's unchanged package version; the owner's release workflow supplies the formal release version. The user selected handoff to the owner for formal signing/publication. No local installation, public upload, owner message or upstream PR was performed. The handoff contains source changes, accepted engine and provenance, development candidate and evidence, plus a Chinese PR title/body draft.
+The local development version `0.2.0` is the repository's unchanged package version; the owner's release workflow supplies the formal release version. The user selected handoff to the owner for formal signing/publication. The original local handoff checkpoint preceded source PR submission and any separately authorized contributor artifact upload. Its package contains source changes, accepted engine and provenance, development candidate and evidence, plus a Chinese PR title/body draft. Source review and contributor validation artifacts remain separate from the owner's formal release acceptance.
 
 ## Gates still required for full CCBaga support
 
